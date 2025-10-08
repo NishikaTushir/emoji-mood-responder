@@ -7,7 +7,6 @@ Type "exit" or "quit" (without quotes) to end the program.
 
 import re
 
-# Mood dictionary: each mood maps to keywords, emoji and response message
 MOODS = {
     "happy": {
         "keywords": ["happy", "joy", "glad", "good", "great", "awesome", "fantastic", "cheerful", "content", "pleased"],
@@ -36,10 +35,8 @@ MOODS = {
     }
 }
 
-# Pre-compile regex patterns for each mood for precise word matching (word boundaries)
 PATTERNS = {}
 for mood, info in MOODS.items():
-    # escape keywords to be regex-safe then join with |
     joined = "|".join(re.escape(k) for k in info["keywords"])
     PATTERNS[mood] = re.compile(rf"\b(?:{joined})\b", flags=re.IGNORECASE)
 
@@ -63,7 +60,6 @@ def main():
             break
 
         if not user:
-            # handle empty input gracefully
             print("You didn't type anything — try describing how you feel (or 'exit').\n")
             continue
 
@@ -77,7 +73,6 @@ def main():
             info = MOODS[mood]
             print(f"{info['emoji']}  {info['response']}\n")
         else:
-            # No keyword detected; be graceful and give a helpful prompt
             print("I couldn't quite detect your mood from that. Could you use words like 'happy', 'sad', 'tired', 'angry', or 'excited'? Or describe how you feel in one word.\n")
 
 if __name__ == "__main__":

@@ -1,0 +1,77 @@
+# Emotion Detector from Text
+# Language: Python 3
+
+from collections import Counter
+
+# Predefined emotion keyword dictionary
+emotion_dict = {
+    "happy": "joy",
+    "joy": "joy",
+    "glad": "joy",
+    "excited": "joy",
+    "love": "joy",
+    "smile": "joy",
+    "pleasure": "joy",
+
+    "sad": "sadness",
+    "cry": "sadness",
+    "unhappy": "sadness",
+    "lonely": "sadness",
+    "tears": "sadness",
+    "hurt": "sadness",
+    "depressed": "sadness",
+
+    "angry": "anger",
+    "mad": "anger",
+    "furious": "anger",
+    "annoyed": "anger",
+    "hate": "anger",
+    "irritated": "anger",
+
+    "fear": "fear",
+    "scared": "fear",
+    "afraid": "fear",
+    "nervous": "fear",
+    "worried": "fear",
+    "anxious": "fear",
+}
+
+# Emoji mapping for display
+emoji_dict = {
+    "joy": "😊",
+    "sadness": "😢",
+    "anger": "😡",
+    "fear": "😨"
+}
+
+print("🔹 Emotion Detector from Text 🔹")
+print("Type 'exit' to quit.\n")
+
+while True:
+    # Take input
+    user_input = input("Enter a sentence: ")
+
+    # Exit condition
+    if user_input.lower() == "exit":
+        print("Exiting Emotion Detector. Goodbye! 👋")
+        break
+
+    # Preprocessing: lowercase + split
+    words = user_input.lower().split()
+
+    # Match words with dictionary
+    emotions_found = []
+    for word in words:
+        if word in emotion_dict:
+            emotions_found.append(emotion_dict[word])
+
+    # If no emotion words found
+    if not emotions_found:
+        print("⚠ No clear emotion detected.\n")
+    else:
+        # Count frequency of emotions
+        emotion_count = Counter(emotions_found)
+        dominant_emotion = emotion_count.most_common(1)[0][0]
+        emoji = emoji_dict.get(dominant_emotion, "")
+        
+        print(f"✅ Detected Emotion: {dominant_emotion.capitalize()} {emoji}\n")
